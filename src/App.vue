@@ -1,39 +1,58 @@
-<!-- 
 <script setup>
 import { ref } from 'vue'
-let count = ref(0)
-setInterval(() => {
-  count.value = count.value + 1
-  console.log(count)
-  console.log(count.value)
-}, 1000)
+const newGroup = ref({
+  section: '',
+  groupName: '',
+  repo: '',
+  members: []
+})
+const numOfMembers = ref(0)
 </script>
-<template>
-  <div>Count: {{ count }}</div>
-</template>
-<style scoped></style> -->
 
-<!-- ref -->
-<script setup>
-import { ref } from 'vue'
-//reactive on object variable
-const student = ref({ id: 1, name: 'Somsak' })
-//correct
-console.log(student.value.id)
-console.log(student.value.name)
-//incorrect
-console.log(student.id)
-console.log(student.name)
-//reactive on array variable
-const ids = ref([111, 123, 333, 555])
-//correct
-console.log(ids.value.length)
-console.log(ids.value[0])
-console.log(ids.value[ids.value.length - 1])
-//incorrect
-console.log(ids.length)
-</script>
 <template>
-  <div></div>
+  <div class="w-full">
+    <div class="flex flex-col gap-2 bg-slate-100 p-3">
+      <div>
+        Section:
+        <select v-model="newGroup.section">
+          <option value="1">1</option>
+          <option value="1">2</option>
+        </select>
+        {{ newGroup.section }}
+      </div>
+      <div>
+        Group Name:
+        <input
+          type="text"
+          v-model.trim="newGroup.groupName"
+          class="w-1/2 border border-gray-300 p-0.5 outline-none rounded-lg"
+        />
+        {{ newGroup.groupName }}
+      </div>
+      <div>
+        GitHub Repository:
+        <input
+          type="text"
+          v-model.trim="newGroup.repo"
+          class="w-1/2 border border-gray-300 p-0.5 outline-none rounded-lg"
+        />
+        {{ newGroup.repo }}
+      </div>
+      <div>
+        <div>
+          Number of Members:
+          <input
+            type="number"
+            min="0"
+            v-model.number="numOfMembers"
+            class="border border-gray-300 p-0.5 outline-none rounded-lg"
+          />
+          {{ numOfMembers }}
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
-<style scoped></style>
+
+<style scoped>
+</style>
