@@ -6,7 +6,27 @@ const newGroup = ref({
   repo: '',
   members: []
 })
+
+//members:[{
+//     projectCo:false,
+//     studentId:'',
+//     studentName:''
+// },]
 const numOfMembers = ref(0)
+const saveNewGroup = () => {
+  console.log(newGroup.value)
+}
+
+const addNewMember = () => {
+  newGroup.value.members = []
+  for (let index = 0; index < numOfMembers.value; index++) {
+    newGroup.value.members.push({
+      projectCo: false,
+      studentId: '',
+      studentName: ''
+    })
+  }
+}
 </script>
 
 <template>
@@ -16,7 +36,7 @@ const numOfMembers = ref(0)
         Section:
         <select v-model="newGroup.section">
           <option value="1">1</option>
-          <option value="1">2</option>
+          <option value="2">2</option>
         </select>
         {{ newGroup.section }}
       </div>
@@ -42,6 +62,8 @@ const numOfMembers = ref(0)
         <div>
           Number of Members:
           <input
+            @change="addNewMember"
+            id="input-number-members"
             type="number"
             min="0"
             v-model.number="numOfMembers"
@@ -49,10 +71,39 @@ const numOfMembers = ref(0)
           />
           {{ numOfMembers }}
         </div>
+        <div
+          v-for="(member, index) in newGroup.members"
+          :key="index"
+          class="flex flex-row gap-2 space-y-2 items-center"
+        >
+          <input type="checkbox" v-model="member.projectCo" />[Project
+          Coordinator] {{ member.projectCo }} Student Id:
+          <input
+            v-model.number="member.studentId"
+            type="text"
+            class="border border-gray-300 p-0.5 outline-none rounded-lg"
+          />{{ member.studentId }}
+          Student Name:
+          <input
+            v-model.trim="member.studentName"
+            type="text"
+            class="border border-gray-300 p-0.5 outline-none rounded-lg"
+          />{{ member.studentName }}
+        </div>
+        <div class="flex gap-2">
+          <button
+            class="px-2 py-1 bg-green-600 text-white rounded-lg"
+            v-on:click="saveNewGroup"
+          >
+            OK
+          </button>
+          <button class="px-2 py-1 bg-red-600 text-white rounded-lg">
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
